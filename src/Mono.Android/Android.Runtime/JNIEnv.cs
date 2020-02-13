@@ -48,8 +48,6 @@ namespace Android.Runtime {
 
 		static bool AllocObjectSupported;
 
-		static IntPtr cid_System;
-		static IntPtr mid_System_identityHashCode;
 		static IntPtr grefIGCUserPeer_class;
 
 		internal static int    gref_gc_threshold;
@@ -294,12 +292,8 @@ namespace Android.Runtime {
 		[DllImport ("__Internal", CallingConvention = CallingConvention.Cdecl)]
 		extern static void _monodroid_gc_wait_for_bridge_processing ();
 
-		static volatile bool BridgeProcessing; // = false
-
 		public static void WaitForBridgeProcessing ()
 		{
-			if (!BridgeProcessing)
-				return;
 			_monodroid_gc_wait_for_bridge_processing ();
 		}
 
@@ -736,8 +730,6 @@ namespace Android.Runtime {
 				return ex.ToLocalJniHandle ();
 			return NewLocalRef (value.Handle);
 		}
-
-		static IntPtr char_sequence_to_string_id;
 
 		public static string GetCharSequence (IntPtr jobject, JniHandleOwnership transfer)
 		{
